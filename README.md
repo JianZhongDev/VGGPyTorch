@@ -2,7 +2,7 @@
 A comprehensive tutorial on how to implement and train a VGG model using PyTorch
 
 ## Dependency
-The code has been implemented and tested on the following dependencies:
+This repo has been implemented and tested on the following dependencies:
 - Python 3.10.13
 - matplotlib 3.8.2
 - numpy 1.26.2
