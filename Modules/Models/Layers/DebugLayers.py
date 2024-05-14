@@ -8,6 +8,7 @@ import torch
 from torch import nn
 
 
+# debug layer: print the shape of input 
 class PrintShapeLayer(nn.Module):
     def __init__(self):
         super().__init__()
@@ -17,6 +18,7 @@ class PrintShapeLayer(nn.Module):
         return x
 
 
+# debug layer: print value of input 
 class PrintValueLayer(nn.Module):
     def __init__(self):
         super().__init__()
@@ -26,6 +28,7 @@ class PrintValueLayer(nn.Module):
         return x
 
 
+# debug layer: send out message 
 class PrintMessageLayer(nn.Module):
     def __init__(self,message = ""):
         super().__init__()

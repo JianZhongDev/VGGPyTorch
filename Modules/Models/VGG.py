@@ -26,11 +26,14 @@ class VGG(nn.Module):
 
         stacked_layers = []
 
+        # add debug layers if debuging is enabled
         if enable_debug:
             stacked_layers += [
                 DebugLayers.PrintMessageLayer("input"),
                 DebugLayers.PrintShapeLayer()
             ]
+
+        # add stacked convolutional layers and max pooling layers
         for i_stackconv_descrip in range(len(stacked_conv_descriptors)):
             cur_stacked_conv_descriptor = stacked_conv_descriptors[i_stackconv_descrip]
             if not isinstance(cur_stacked_conv_descriptor, list):
@@ -40,49 +43,68 @@ class VGG(nn.Module):
                     cur_stacked_conv_descriptor
                 )
             )
+
+            # add debug layers if debuging is enabled
             if enable_debug:
                 stacked_layers += [
                     DebugLayers.PrintMessageLayer("stacked conv"),
                     DebugLayers.PrintShapeLayer()
                 ]
+
+            # add max pooling layer after stacked convolutional layer
             stacked_layers.append(
                 nn.MaxPool2d(
                     kernel_size = 2,
                     stride = 2,
                 )
             )
+
+            # add debug layers if debuging is enabled
             if enable_debug:
                 stacked_layers += [
                     DebugLayers.PrintMessageLayer("max pool"),
                     DebugLayers.PrintShapeLayer()
                 ]
+
+        # flatten convolutional layers 
         stacked_layers.append(
             nn.Flatten()
         )
+
+        # add debug layers if debuging is enabled
         if enable_debug:
             stacked_layers += [
                 DebugLayers.PrintMessageLayer("flatten"),
                 DebugLayers.PrintShapeLayer()
             ]
+        
+        # add stacked linear layers
         stacked_layers.append(
             StackedLayers.VGGStackedLinear(
                 stacked_linear_descriptor
             )
         )
+
+        # add debug layers if debuging is enabled
         if enable_debug:
             stacked_layers += [
                 DebugLayers.PrintMessageLayer("stacked linear"),
                 DebugLayers.PrintShapeLayer()
             ]
+
+        # add softmax layer at the very end
         stacked_layers.append(
             nn.Softmax(dim = -1)
         )
+
+        # add debug layers if debuging is enabled
         if enable_debug:
             stacked_layers += [
                 DebugLayers.PrintMessageLayer("softmax"),
                 DebugLayers.PrintShapeLayer(),
             ]
 
+        # convert list of layers to Sequantial network
         if len(stacked_layers) > 0:
             self.network = nn.Sequential(*stacked_layers)
 
