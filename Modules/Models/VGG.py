@@ -11,6 +11,7 @@ from .Layers import StackedLayers
 from .Layers import DebugLayers
 
 
+# VGG model definition
 class VGG(nn.Module):
     def __init__(
         self,

@@ -108,7 +108,7 @@ def validate_one_epoch_topk(
     return (avg_loss, correct_rate)
 
 
-# test model in one epoch and return the top k-th result 
+# validate model in one epoch and return the top k-th result 
 def validate_one_epoch_topk_aug(
         model, 
         validate_loader, 
